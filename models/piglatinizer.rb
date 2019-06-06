@@ -1,14 +1,19 @@
 class PigLatinizer
-    attr_accessor :word
+    attr_reader :processed
 
-    def piglatinize
-    words = word.split
-    result = @words.collect do |word|
-        word = words.downcase
+    def piglatinize(sentence)
+    words = sentence.split()
+    
+    result = words.collect do |word|
+        if ["a","e","i","o","u","A","E","I","O","U"].include?(word[0])
+            word+"way"
+        else
+        word = word.downcase
         to_remove = word.scan(/[^aeiouAEIOU]*/).first
-        remaining_word = word.split(to_remove).last
+        remaining_word = word[to_remove.length,word.length]
         remaining_word+to_remove+'ay'
+        end
     end
-        return result.join(" ")
+        @processed = result.join(" ")
     end
 end
